@@ -27,6 +27,7 @@ from twisted.python import log
 
 import dns.exception
 import dns.message
+import dns.query
 
 class GenericDnsClientProtocol(object):
     def __init__(self, reactor, one_rr_per_rrset):
@@ -95,7 +96,7 @@ class GenericDnsClientProtocol(object):
             query_response.callback(response)
             
         else:
-            query_response.errback(failure.Failure(BadResponse()))
+            query_response.errback(failure.Failure(dns.query.BadResponse()))
 
     def _send_query(self, wire_data, query, query_response, timeout):
         """
